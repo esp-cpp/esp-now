@@ -98,8 +98,8 @@ typedef struct {
     } receive_enable;            /**< Set 1 to enable receiving the corresponding ESP-NOW data type */
     struct {
         uint32_t stack_size_bytes;   /**< Task stack size in bytes. Increase this if you perform more work in the callbacks. */
-        int32_t core_id;             /**< Task core ID, tskNO_AFFINITY means not pinned to a core. */
         uint8_t priority;            /**< Task priority, tskIDLE_PRIORITY is the lowest priority */
+        int32_t core_id;             /**< Task core ID, tskNO_AFFINITY means not pinned to a core. */
     } task_config; /**< Task configuration for the espnow_main task. */
 } espnow_config_t;
 
