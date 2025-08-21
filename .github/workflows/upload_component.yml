@@ -17,7 +17,7 @@ jobs:
       - name: Upload components to component service
         uses: espressif/upload-components-ci-action@v2
         with:
-          name: esp-now
+          components: "esp-now: ."
           namespace: "espp"
           # use an old version if this isn't a release for testing
           version: ${{ github.event.release && github.event.release.tag_name || 'v0.1.0' }}
