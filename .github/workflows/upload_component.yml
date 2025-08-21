@@ -1,19 +1,25 @@
 name: Push components to Espressif Component Service
 
 on:
-  push:
-    branches:
-      - master
+  # For pull requests: perform upload with "--dry-run" argument,
+  # i.e. validate that the component passes all checks for being uploaded.
+  pull_request:
+
+  release:
+    types: [published]
 
 jobs:
   upload_components:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
 
       - name: Upload components to component service
-        uses: espressif/upload-components-ci-action@v1
+        uses: espressif/upload-components-ci-action@v2
         with:
           name: esp-now
-          namespace: "espressif"
+          namespace: "espp"
+          # use an old version if this isn't a release for testing
+          version: ${{ github.event.release && github.event.release.tag_name || 'v0.1.0' }}
           api_token: ${{ secrets.IDF_COMPONENT_API_TOKEN }}
+          dry_run: ${{ ! github.event.release }}
