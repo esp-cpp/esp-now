@@ -401,7 +401,7 @@ EXIT:
 }
 
 /**< callback function of sending ESPNOW data */
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 1)
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
 void espnow_send_cb(const esp_now_send_info_t *tx_info, esp_now_send_status_t status)
 #else
 void espnow_send_cb(const uint8_t *addr, esp_now_send_status_t status)

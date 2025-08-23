@@ -1,0 +1,40 @@
+name: Build
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    strategy:
+      matrix:
+        # all the idf versions we want to test
+        idf:
+        - version: 'v5.4.1'
+        - version: 'v5.4.2'
+        - version: 'v5.5'
+        # all the examples
+        build:
+        - path: 'examples/coin_cell_demo/bulb'
+        - path: 'examples/coin_cell_demo/switch'
+        - path: 'examples/control'
+        - path: 'examples/get-started'
+        - path: 'examples/ota'
+        - path: 'examples/provisioning'
+        - path: 'examples/security'
+        - path: 'examples/solution'
+        - path: 'examples/wireless_debug'
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Build code
+      uses: espressif/esp-idf-ci-action@v1
+      with:
+        esp_idf_version: ${{ matrix.idf.version }}
+        path: ${{ matrix.build.path }}
+        target: esp32s3
+        command: 'idf.py build'
