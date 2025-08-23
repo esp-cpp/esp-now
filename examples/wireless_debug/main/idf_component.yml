@@ -8,7 +8,6 @@ dependencies:
   idf:
     version: ">=4.4"
   esp-now:
-    version: "2.*"
     override_path: "../../.."
   # # Put list of dependencies here
   # # For components maintained by Espressif:

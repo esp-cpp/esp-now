@@ -1,6 +1,7 @@
 description: This package provides enhanced ESP-NOW functions which will be easy to integrate into product.
 url: https://github.com/esp-cpp/esp-now
 issues: https://github.com/esp-cpp/esp-now/issues
+version: "1.0.2"
 dependencies:
   idf: ">=5.0"
   cmake_utilities: "0.*"

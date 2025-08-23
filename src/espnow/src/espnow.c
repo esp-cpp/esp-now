@@ -411,7 +411,7 @@ void espnow_send_cb(const uint8_t *addr, esp_now_send_status_t status)
         g_buffered_num --;
     }
 
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 1)
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
     if (!tx_info || !g_event_group) {
         ESP_LOGW(TAG, "Send cb args error, tx_info is NULL");
         return ;
