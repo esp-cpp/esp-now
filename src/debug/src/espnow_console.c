@@ -29,6 +29,10 @@
 #endif
 #include "driver/usb_serial_jtag.h"
 
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
+#include "driver/usb_serial_jtag_vfs.h"
+#endif
+
 #include "linenoise/linenoise.h"
 #include "argtable3/argtable3.h"
 
