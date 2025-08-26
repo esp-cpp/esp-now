@@ -253,10 +253,17 @@ esp_err_t espnow_console_init(const espnow_console_config_t *config)
     /* Disable buffering on stdin */
     setvbuf(stdin, NULL, _IONBF, 0);
 
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
+    /* Minicom, screen, idf_monitor send CR when ENTER key is pressed */
+    usb_serial_jtag_vfs_set_rx_line_endings(ESP_LINE_ENDINGS_CR);
+    /* Move the caret to the beginning of the next line on '\n' */
+    usb_serial_jtag_vfs_set_tx_line_endings(ESP_LINE_ENDINGS_CRLF);
+#else
     /* Minicom, screen, idf_monitor send CR when ENTER key is pressed */
     esp_vfs_dev_usb_serial_jtag_set_rx_line_endings(ESP_LINE_ENDINGS_CR);
     /* Move the caret to the beginning of the next line on '\n' */
     esp_vfs_dev_usb_serial_jtag_set_tx_line_endings(ESP_LINE_ENDINGS_CRLF);
+#endif
 
     /* Enable non-blocking mode on stdin and stdout */
     fcntl(fileno(stdout), F_SETFL, 0);
@@ -267,8 +274,13 @@ esp_err_t espnow_console_init(const espnow_console_config_t *config)
     /* Install USB-SERIAL-JTAG driver for interrupt-driven reads and writes */
     ESP_ERROR_CHECK(usb_serial_jtag_driver_install(&usb_serial_jtag_config));
 
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
+    /* Tell vfs to use usb-serial-jtag driver */
+    usb_serial_jtag_vfs_use_driver();
+#else
     /* Tell vfs to use usb-serial-jtag driver */
     esp_vfs_usb_serial_jtag_use_driver();
+#endif
 
 #elif CONFIG_ESP_CONSOLE_USB_CDC
     /* Minicom, screen, idf_monitor send CR when ENTER key is pressed */
